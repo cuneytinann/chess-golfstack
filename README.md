@@ -1,4 +1,4 @@
-# Chess Bot (Code-Golf Style)
+# Chess Bot (Code-Golf Style) [14277 byte ~ 14 kB]
 
 A lightweight, single-file chess engine implemented in HTML, CSS, and JavaScript.  
 The project is designed in a **code-golf optimized** manner while still supporting full legal move handling and a playable AI opponent.
@@ -20,3 +20,4 @@ This project focuses on minimizing file size and code footprint:
 - Works locally in any modern browser
 
 📂 Project Structure
+
