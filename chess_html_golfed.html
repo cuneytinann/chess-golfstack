@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="tr"><head><meta charset="UTF-8"><title>Satranç Bot</title><style>
+<!DOCTYPE html><html lang="tr"><head><meta charset="UTF-8"><title>Chess Bot</title><style>
 body{margin:0;background:#222;color:#fff;font-family:sans-serif;display:flex;justify-content:center;align-items:flex-start;min-height:100vh}
-.c{text-align:center;margin-top:10px}
+.c{text-align:center;}
 #s{font-size:12px;margin-bottom:4px}
 #bc{margin:10px auto;display:inline-block}
 .f{display:flex;justify-content:space-between;width:480px;font-size:12px}
@@ -26,19 +26,19 @@ body{margin:0;background:#222;color:#fff;font-family:sans-serif;display:flex;jus
 .sb{background:#b58863;color:#000;text-shadow:0 0 1px #fff}
 .sw{background:#f0d9b5;color:#fff;text-shadow:0 0 2px #000}
 </style></head><body>
-<div class="c"><h1>Satranç Bot</h1><div id="s">Renk seç.</div><div id="bc">
+<div class="c"><h4>Chess Bot</h4><div id="s">Choose a side.</div><div id="bc">
 <div id="ft" class="f"></div>
 <div class="rw"><div id="rl" class="r"></div><div id="b"></div><div id="rr" class="r"></div></div>
 <div id="fb" class="f"></div>
 </div>
-<div><button id="rb">Yeniden</button></div>
+<div><button id="rb">Play again</button></div>
 </div>
 
-<div class="o" id="so"><div class="m"><div>Renk seç:</div><div id="si">
+<div class="o" id="so"><div class="m"><div>Choose a side:</div><div id="si">
 <button id="pb" class="sb">♚</button><button id="pw" class="sw">♔</button>
 </div></div></div>
 
-<div class="o" id="po" style="display:none;"><div class="m"><div>Terfi:</div><div id="pc"></div></div></div>
+<div class="o" id="po" style="display:none;"><div class="m"><div>Promotion to:</div><div id="pc"></div></div></div>
 
 <script>
 let B,W,G,S,L,C,E,H,P,HW=1,SC=0,RF=0,AP=0,PP=[],Q=null
@@ -280,13 +280,13 @@ HM=d=>{
   return 1
 },
 EV=()=>{
-  if(H>=100)return{g:1,m:"50 hamle: berabere."}
-  if(!HM(B))return{g:1,m:"Berabere (materyal)."}
-  if(TR())return{g:1,m:"3 tekrar: berabere."}
+  if(H>=100)return{g:1,m:"50 moves rule: Draw!"}
+  if(!HM(B))return{g:1,m:"Insufficient materials: Draw!"}
+  if(TR())return{g:1,m:"Threefold repetition: Draw!"}
   const w0=W,m=GL(w0)
   if(!m.length){
-    if(IC(B,w0))return{g:1,m:w0?"Mat! Siyah.":"Mat! Beyaz."}
-    return{g:1,m:"Pat: berabere."}
+    if(IC(B,w0))return{g:1,m:w0?"Checkmate: Black won!":"Checkmate: White won!"}
+    return{g:1,m:"Stalemate: Draw!"}
   }
   return{g:0,m:null}
 },
@@ -442,7 +442,7 @@ CM=()=>{
     G=1;s.textContent=r0.m;r.style.display="inline-block"
     return
   }
-  s.textContent="Sıra sizde"
+  s.textContent="Your turn"
 },
 RG=()=>{
   B=[
@@ -459,11 +459,11 @@ RG=()=>{
   C={wK:1,wQ:1,bK:1,bQ:1}
   E=null;H=0;P={};AP=0;PP=[];SC=0;RF=HW?0:1;Q=null
   o.style.display="flex";p.style.display="none"
-  s.textContent="Renk seç."
+  s.textContent="Choose a side."
   r.style.display="none"
   RC();RB();RP()
 }
-w.addEventListener("click",()=>{HW=1;RF=0;SC=1;o.style.display="none";s.textContent="Sıra sizde";RB()})
+w.addEventListener("click",()=>{HW=1;RF=0;SC=1;o.style.display="none";s.textContent="Your turn";RB()})
 k.addEventListener("click",()=>{HW=0;RF=1;SC=1;o.style.display="none";RB();setTimeout(CM,400)})
 r.addEventListener("click",RG)
 RG()
