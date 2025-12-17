@@ -340,12 +340,11 @@ AM=m=>{
   RP()
 },
 RC=()=>{
-  const ff="abcdefgh".split("")
+  const ff=[..."abcdefgh"];if(RF)ff.reverse()
   f.innerHTML=g.innerHTML=h.innerHTML=j.innerHTML=""
-  ff.forEach(ch=>{const sp=document.createElement("span");sp.textContent=ch;f.appendChild(sp)})
-  ff.slice().reverse().forEach(ch=>{const sp=document.createElement("span");sp.textContent=ch;g.appendChild(sp)})
-  for(let y=8;y>=1;y--){const sp=document.createElement("span");sp.textContent=y;h.appendChild(sp)}
-  for(let y=1;y<=8;y++){const sp=document.createElement("span");sp.textContent=y;j.appendChild(sp)}
+  ff.forEach(ch=>{let a=document.createElement("span"),b=document.createElement("span");a.textContent=b.textContent=ch;f.appendChild(a);g.appendChild(b)})
+  const rr=RF?[1,2,3,4,5,6,7,8]:[8,7,6,5,4,3,2,1]
+  rr.forEach(y=>{let a=document.createElement("span"),b=document.createElement("span");a.textContent=b.textContent=y;h.appendChild(a);j.appendChild(b)})
 },
 RB=()=>{
   b.innerHTML=""
@@ -463,8 +462,8 @@ RG=()=>{
   r.style.display="none"
   RC();RB();RP()
 }
-w.addEventListener("click",()=>{HW=1;RF=0;SC=1;o.style.display="none";s.textContent="Your turn";RB()})
-k.addEventListener("click",()=>{HW=0;RF=1;SC=1;o.style.display="none";RB();setTimeout(CM,400)})
+w.addEventListener("click",()=>{HW=1;RF=0;SC=1;o.style.display="none";s.textContent="Your turn";RC();RB()})
+k.addEventListener("click",()=>{HW=0;RF=1;SC=1;o.style.display="none";RC();RB();setTimeout(CM,400)})
 r.addEventListener("click",RG)
 RG()
 </script></body></html>
