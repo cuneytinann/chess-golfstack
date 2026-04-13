@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<script>
+var s="rnbqkbnrpppppppp................................PPPPPPPPRNBQKBNR".split(''),
+t='W',e=-1,o=15,
+w=p=>p===p.toUpperCase(),
+f=()=>t=t=='W'?'B':'W'
+function c(f1,t1){
+var x1=f1%8,y1=f1>>3,x2=t1%8,y2=t1>>3,dx=Math.sign(x2-x1),dy=Math.sign(y2-y1),x=x1+dx,y=y1+dy
+while(x!=x2||y!=y2){if(s[y*8+x]!='.')return!1;x+=dx;y+=dy}
+return!0}
+function a(idx,bw){
+var x1=idx%8,y1=idx>>3,i=0,p,P,x2,y2,dx,dy
+for(;i<64;i++){
+p=s[i];if(p=='.'||w(p)!=bw)continue
+P=p.toUpperCase();x2=i%8;y2=i>>3;dx=Math.abs(x1-x2);dy=Math.abs(y1-y2)
+if(P=='R'&&!dx*dy&&c(i,idx))return!0
+if(P=='B'&&dx==dy&&c(i,idx))return!0
+if(P=='Q'&&(!dx*dy||dx==dy)&&c(i,idx))return!0
+if(P=='N'&&dx*dy==2)return!0
+if(P=='K'&&dx<2&&dy<2)return!0
+if(P=='P'&&y1-y2==(bw?-1:1)&&dx==1)return!0}
+return!1}
+function j(W){return a(s.indexOf(W?'K':'k'),!W)}
+function g(idx){
+var mv=[],p=s[idx],P=p.toUpperCase(),x1=idx%8,y1=idx>>3,W=w(p),i,x2,y2,dx,dy,tg,tw,ok,d,sy,rw
+for(i=0;i<64;i++){
+if(i==idx)continue
+x2=i%8;y2=i>>3;dx=Math.abs(x1-x2);dy=Math.abs(y1-y2);tg=s[i];tw=w(tg);ok=0
+if(P=='R')ok=!dx*dy&&c(idx,i)
+if(P=='B')ok=dx==dy&&c(idx,i)
+if(P=='Q')ok=(!dx*dy||dx==dy)&&c(idx,i)
+if(P=='N')ok=dx*dy==2
+if(P=='K')ok=dx<2&&dy<2
+if(P=='P'){d=W?-1:1;sy=y2-y1;ok=(sy==d&&!dx&&tg=='.')||(sy==d&&dx==1&&(tg!='.'&&W!=tw||i==e))||(sy==2*d&&!dx&&tg=='.'&&s[(y1+d)*8+x1]=='.'&&y1==(W?6:1))}
+if(ok&&(P=='P'||tg=='.'||W!=tw))mv.push(i)}
+if(P=='K'&&!j(W)){
+rw=W?7:0
+if(o&(W?1:4)&&s[rw*8+5]=='.'&&s[rw*8+6]=='.'&&!a(rw*8+5,!W)&&!a(rw*8+6,!W))mv.push(rw*8+6)
+if(o&(W?2:8)&&s[rw*8+3]=='.'&&s[rw*8+2]=='.'&&s[rw*8+1]=='.'&&!a(rw*8+3,!W)&&!a(rw*8+2,!W))mv.push(rw*8+2)}
+return mv.filter(i=>{
+var sv=[...s],se=e,so=o
+m(idx,i,'Q');var st=j(W)
+s=sv;e=se;o=so;return!st})}
+function m(f1,t1,p2){
+var p=s[f1],P=p.toUpperCase(),W=w(p),x1=f1%8,y1=f1>>3,x2=t1%8,y2=t1>>3
+if(P=='P'&&t1==e)s[(y2-(W?-1:1))*8+x2]='.'
+s[t1]=s[f1];s[f1]='.'
+if(P=='K'){
+if(x2-x1==2){s[y1*8+5]=s[y1*8+7];s[y1*8+7]='.'}
+if(x2-x1==-2){s[y1*8+3]=s[y1*8+0];s[y1*8+0]='.'}
+o&=W?~3:~12}
+if(P=='R')o&=~({0:8,7:4,56:2,63:1}[f1]||0)
+e=P=='P'&&Math.abs(y2-y1)==2?(y1+(W?-1:1))*8+x1:-1
+if(P=='P'&&(y2==0||y2==7))s[t1]=W?(p2||'Q').toUpperCase():(p2||'Q').toLowerCase()}
+function p2i(sq){return(8-+sq[1])*8+'abcdefgh'.indexOf(sq[0])}
+function pr(){return[...Array(8)].map((_,r)=>s.slice(r*8,r*8+8).join(' ')).join('\n')}
+function r(){
+var W=t=='W',inp,fr,to,pm,p2
+while(1){
+inp=prompt(pr())
+if(!inp)return
+fr=p2i(inp.slice(0,2));to=p2i(inp.slice(2,4))
+pm=g(fr)
+if(s[fr]=='.'||w(s[fr])!=W||!pm.includes(to)){r();return}
+if(s[fr].toUpperCase()=='P'&&(to>>3==0||to>>3==7)){
+p2=prompt('Promote: Q R B N')||'Q'
+m(fr,to,p2.toUpperCase())}else{m(fr,to,null)}
+f();W=t=='W'}}
+r()
+</script>
